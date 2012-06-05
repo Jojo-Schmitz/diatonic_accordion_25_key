@@ -6,9 +6,11 @@
 //  G/C Diatonic accordion plugin
 //  This version is for the 25 keys Hohner Galaad diatonic accordion.
 //
-//  Copyright (C)2012 Pierre Thomas, Rich Helms, Werner Schweer and others
+//  Copyright (C)2012 Joachim Schmitz Pierre Thomas, Rich Helms, 
+//  Werner Schweer and others
 //  This is a variation of Werner Schweer very famous recorder_fingering plugin.
 //
+// Joachim Schmitz at jojo@schmitz-digital.de
 // Pierre Thomas at pithomas@free.fr
 // Rich Helms at rich@richhelms.ca
 //
@@ -76,25 +78,29 @@ function init()
 
 function run()
       {
+     if (typeof curScore === 'undefined')
+            return;
       var cursor = new Cursor(curScore);
-      cursor.staff = 0;
-      cursor.voice = 0;
-      cursor.rewind();  // Set cursor to first chord/rest
-      while (!cursor.eos()) {
-            if (cursor.isChord()) {
+      for (var staff = 0; staff < curScore.staves; ++staff) {
+            cursor.staff = staff;
+            cursor.voice = 0;
+            cursor.rewind();  // Set cursor to first chord/rest
+            while (!cursor.eos()) {
+                  if (cursor.isChord()) {
                   
-                  var pitch = cursor.chord().topNote().pitch;
-                  var index = pitch - 48;
-                  if(index >= 0 && index < button.length){ 
-                      var text = new Text(curScore);
-                      var font = new QFont("arial", 13);                     
-                      text.defaultFont = font;
-                      text.text = button[index];
-                      text.yOffset = 3;
-                      cursor.putStaffText(text);                      
-                      }
+                        var pitch = cursor.chord().topNote().pitch;
+                        var index = pitch - 48;
+                        if(index >= 0 && index < button.length){ 
+                            var text = new Text(curScore);
+                            var font = new QFont("arial", 13);                     
+                            text.defaultFont = font;
+                            text.text = button[index];
+                            text.yOffset = 3;
+                            cursor.putStaffText(text);                      
+                            }
+                        }
+                  cursor.next();
                   }
-            cursor.next();
             }
       }
 
