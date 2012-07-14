@@ -38,6 +38,9 @@
 // 60 is middle C
 // See   http://musescore.org/en/plugin-development/note-pitch-values   for pitch details
 
+import QtQuick 1.0
+import MuseScore 1.0
+
 var fingerings = [ 
 "c", "C", "d", "D", "e", "f", "F", "g", "G", "a", "A", "b", 
 "c", "C", "d", "D", "e", "f", "F", "g", "G", "a", "A", "b", 
@@ -55,65 +58,35 @@ var button =  [
 ] 
 
 
-
-//---------------------------------------------------------
-//    init
-//    This function will be called on startup of mscore
-//---------------------------------------------------------
-
-function init()
-      {
-      // print("test script init");
-      }
-
-//-------------------------------------------------------------------
-//    run
-//    This function will be called when activating the
-//    plugin menu entry
-//
-//    global Variables:
-//    pluginPath - contains the plugin path; file separator is "/"
-//-------------------------------------------------------------------
-
-
-function run()
-      {
+MuseScore {
+   menuPath: 'Plugins.G/C 25-key diatonic accordion 4'
+   onRun: {
      if (typeof curScore === 'undefined')
-            return;
-      var cursor = new Cursor(curScore);
-      for (var staff = 0; staff < curScore.staves; ++staff) {
-            cursor.staff = staff;
-            cursor.voice = 0;
-            cursor.rewind();  // Set cursor to first chord/rest
-            while (!cursor.eos()) {
-                  if (cursor.isChord()) {
-                  
-                        var pitch = cursor.chord().topNote().pitch;
-                        var index = pitch - 48;
-                        if(index >= 0 && index < button.length){ 
-                            var text = new Text(curScore);
-                            var font = new QFont("arial", 13);                     
-                            text.defaultFont = font;
-                            text.text = button[index];
-                            text.yOffset = 3;
-                            cursor.putStaffText(text);                      
-                            }
-                        }
-                  cursor.next();
-                  }
+            Qt.quit();
+
+      var cursor = curScore,newCursor();
+
+      for (var staff = 0; staff < curScore.nstaves; ++staff) {
+         cursor.staffIdx = staff;
+         cursor.voice = 0;
+         cursor.rewind(0);  // Set cursor to first chord/rest
+         while (cursor.selection) {
+            if (cursor.element && curser.element.type == MScore.CHORD) {
+               var pitch = cursor.element.nores[0].pitch;
+               var index = pitch - 48;
+
+               if (index >= 0 && index < button.length){ 
+                  var text = new Text(curScore);
+                  var font = new QFont("arial", 13);                     
+                  text.defaultFont = font;
+                  text.text = button[index];
+                  //text.yOffset = 3;
+                  cursor.add(text);                      
+               }
             }
+            cursor.next();
+         }
       }
-
-//---------------------------------------------------------
-//    menu:  defines were the function will be placed
-//           in the MuseScore menu structure
-//---------------------------------------------------------
-
-var mscorePlugin = {
-      menu: 'Plugins.G/C 25-key diatonic accordion 4',
-      init: init,
-      run:  run
-      };
-
-mscorePlugin;
-
+      Qt.quit();
+   }
+}
