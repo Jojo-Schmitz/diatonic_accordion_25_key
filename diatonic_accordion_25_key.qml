@@ -43,6 +43,8 @@ import MuseScore 1.0
 
 
 MuseScore {
+   version: "1.0"
+   description: "This plugin creates fingering for the 25 keys Hohner Galaad diatonic accordion"
    menuPath: 'Plugins.G/C 25-key diatonic accordion 4'
    onRun: {
       if (typeof curScore === 'undefined')
