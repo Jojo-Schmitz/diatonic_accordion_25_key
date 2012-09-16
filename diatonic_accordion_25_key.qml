@@ -77,12 +77,12 @@ MuseScore {
          cursor.voice = 0;
          cursor.rewind(0);  // Set cursor to first chord/rest
          while (cursor.segment) {
-            if (cursor.element && cursor.element.type == MScore.CHORD) {
+            if (cursor.element && cursor.element.type == Element.CHORD) {
                var pitch = cursor.element.notes[0].pitch;
                var index = pitch - 48;
 
                if (index >= 0 && index < button.length) { 
-                  var text = newElement(MScore.STAFF_TEXT);
+                  var text = newElement(Element.STAFF_TEXT);
                   //var font = new QFont("arial", 13);                     
                   //text.defaultFont = font;
                   text.text = button[index];
