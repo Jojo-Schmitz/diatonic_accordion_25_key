@@ -86,7 +86,7 @@ MuseScore {
                   //var font = new QFont("arial", 13);                     
                   //text.defaultFont = font;
                   text.text = button[index];
-                  //text.yOffset = 3;
+                  text.pos.y = 6;
                   cursor.add(text);                      
                }
             }
