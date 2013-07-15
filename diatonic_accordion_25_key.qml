@@ -38,7 +38,7 @@
 // 60 is middle C
 // See   http://musescore.org/en/plugin-development/note-pitch-values   for pitch details
 
-import QtQuick 1.0
+import QtQuick 2.0
 import MuseScore 1.0
 
 
