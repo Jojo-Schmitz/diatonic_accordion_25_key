@@ -38,7 +38,7 @@
 // 60 is middle C
 // See   http://musescore.org/en/plugin-development/note-pitch-values   for pitch details
 
-import QtQuick 2.0
+import QtQuick 1.0
 import MuseScore 1.0
 
 
@@ -46,10 +46,6 @@ MuseScore {
    version: "1.0"
    description: "This plugin creates fingering for the 25 keys Hohner Galaad diatonic accordion"
    menuPath: 'Plugins.G/C 25-key diatonic accordion 4'
-   Cursor {
-      id: cursor
-      score: curScore
-   }
    onRun: {
       if (typeof curScore === 'undefined')
          Qt.quit();
@@ -73,6 +69,8 @@ MuseScore {
          " \n4''", " \n \n \n9'\n11", " \n \n \n4''\n ", " \n10\n \n10'\n ", 
          " \n9'", " ", " \n11", " ", " \n10'", " ", " ", " ", " ", " ", " ", " "
       ]; 
+
+      var cursor = curScore.newCursor();
 
       for (var staff = 0; staff < curScore.nstaves; ++staff) {
          cursor.staffIdx = staff;
